@@ -51,8 +51,6 @@ const LoginPage = () => {
           </div>
         </form>
 
-        {/* Forgot Password Link */}
-        {/* Đã sửa 'class' thành 'className' */}
         <div className="mt-6 text-center">
           <a
             href="#"
