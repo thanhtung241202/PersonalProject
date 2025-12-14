@@ -2,13 +2,14 @@
   "name": "personal-project-root",
   "version": "1.0.0",
   "scripts": {
-    "install-all": "npm install && npm install --prefix frontend && npm install --prefix gateway",
+    "install-all": "npm install && npm install --prefix frontend && npm install --prefix gateway && npm install --prefix services/AuthService",
     
     "client": "npm run dev --prefix frontend",
-    "api": "node gateway/server.js",
+    "gateway": "node gateway/server.js",
+    "auth": "node services/AuthService/server.js",
     "stock": "cd services/DailyStockService && uvicorn main:app --reload --port 8000",
     
-    "dev": "concurrently -n \"FE,API,PY\" -c \"bgBlue.bold,bgMagenta.bold,bgYellow.bold\" \"npm run client\" \"npm run api\" \"npm run stock\""
+    "dev": "concurrently -n \"FE,GTW,AUTH,STOCK\" -c \"bgBlue.bold,bgMagenta.bold,bgGreen.bold,bgYellow.bold\" \"npm run client\" \"npm run gateway\" \"npm run auth\" \"npm run stock\""
   },
   "devDependencies": {
     "concurrently": "^8.0.0"

@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema(
     {
@@ -49,3 +50,13 @@ userSchema.methods.matchPassword = async function (enteredPassword) {
 
 // Đã lấy user rồi
 module.exports = mongoose.model('User', userSchema);
+
+
+/*
+{
+    "email": "testuser@gmail.com",
+    "password": "password123",
+    "role": "user",
+    "plan": "bronze"
+}
+*/

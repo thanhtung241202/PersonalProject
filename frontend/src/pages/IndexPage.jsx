@@ -17,7 +17,7 @@ const IndexPage = () => {
     
     try {
       // API call tới Backend của bạn (localhost:3000)
-      const response = await fetch(`http://localhost:3000/monthly/data/${sym}`);
+      const response = await fetch(`http://localhost:3000/api/monthly/data/${sym}`);
       if (!response.ok) throw new Error('API Error');
       
       const data = await response.json();

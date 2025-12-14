@@ -1,11 +1,17 @@
+require('dotenv').config();
 const express = require('express');
+const cookieParser = require('cookie-parser');
+const authRoutes = require('./routes/authRoutes');
+
 const app = express();
-const connectDB = require('./config/db');
-const authRoutes = require('./src/routes/authRoutes');
 
 app.use(express.json());
-connectDB();
-
+app.use(cookieParser()); 
 app.use('/api/auth', authRoutes);
 
-app.listen(3001, () => console.log('AuthService running on port 3001'));
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: 'Đã xảy ra lỗi nội bộ!' });
+});
+
+module.exports = app;

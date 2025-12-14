@@ -19,10 +19,17 @@ exports.login = async (req, res) => {
         }
 
         const token = authService.generateToken(user);
+
+        res.cookie('token', token, {
+            httpOnly: true,  
+            secure: process.env.NODE_ENV === 'production', 
+            sameSite: 'strict', 
+            maxAge: 30 * 24 * 60 * 60 * 1000 
+        });
+
         res.status(200).json({
             message: 'Đăng nhập thành công',
-            token,
-            user: { id: user._id, role: user.role, plan: user.plan }
+            user: { id: user._id, email: user.email, role: user.role, plan: user.plan }
         });
     } catch (err) {
         res.status(500).json({ message: 'Lỗi server', error: err.message });
