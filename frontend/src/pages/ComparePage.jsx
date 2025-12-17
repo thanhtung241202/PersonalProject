@@ -8,16 +8,14 @@ import {
 ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Title, Tooltip, Legend, Filler);
 
 const CHART_COLORS = [
-  '#3a7bf7', // Xanh dương
-  '#f73a3a', // Đỏ
-  '#3af794'  // Xanh lá
+  '#3a7bf7', 
+  '#f73a3a', 
+  '#3af794'  
 ];
 
 const MultiStockChart = ({ historicalData, symbols, isLoading, hasError }) => {
   
-  // Dữ liệu biểu đồ được tính toán dựa trên historicalData
   const chartConfig = useMemo(() => {
-    // Lấy nhãn (labels) từ bộ dữ liệu đầu tiên (giả sử tất cả đều có cùng labels)
     const labels = historicalData.length > 0 ? historicalData[0].labels : [];
 
     const datasets = historicalData
@@ -32,8 +30,7 @@ const MultiStockChart = ({ historicalData, symbols, isLoading, hasError }) => {
           backgroundColor: (context) => {
             const ctx = context.chart.ctx;
             const gradient = ctx.createLinearGradient(0, 0, 0, 300);
-            // Tạo hiệu ứng gradient mờ dần từ màu chính
-            gradient.addColorStop(0, `${color}40`); // 40 là độ mờ
+            gradient.addColorStop(0, `${color}40`); 
             gradient.addColorStop(1, `${color}00`); 
             return gradient;
           },
@@ -43,8 +40,6 @@ const MultiStockChart = ({ historicalData, symbols, isLoading, hasError }) => {
           pointHoverRadius: 6,
           pointBackgroundColor: '#fff',
           pointBorderColor: color,
-          // Chỉ định fill một lần duy nhất.
-          // Fill: 'origin' (vùng dưới đường cong) chỉ dành cho dataset đầu tiên, các dataset khác là false.
           fill: index === 0 ? 'origin' : false, 
         };
       });
@@ -69,7 +64,6 @@ const MultiStockChart = ({ historicalData, symbols, isLoading, hasError }) => {
             titleColor: '#f3f4f6',
             bodyColor: '#d1d5db',
             callbacks: { 
-              // Thêm đơn vị VND vào tooltip
               label: (ctx) => `${ctx.dataset.label}: ${new Intl.NumberFormat('vi-VN').format(ctx.raw)} VND` 
             }
           }
@@ -142,16 +136,14 @@ const ComparePage = () => {
     
     try {
       const fetchPromises = validSymbols.map(async (sym) => {
-        const response = await fetch(`http://localhost:3000/monthly/data/${sym}`);
+        const response = await fetch(`http://localhost:3000/api/monthly/data/${sym}`);
         
         if (!response.ok) {
           console.warn(`Could not fetch data for ${sym}. Status: ${response.status}`);
-          // Trả về dữ liệu rỗng nếu lỗi
           return { symbol: sym, labels: [], values: [] };
         }
         
         const data = await response.json();
-        // Lấy 30 ngày gần nhất
         const sliceNum = 30;
         const newLabels = data.labels ? data.labels.slice(-sliceNum) : [];
         const newValues = data.values ? data.values.slice(-sliceNum) : [];
@@ -161,7 +153,6 @@ const ComparePage = () => {
 
       const results = await Promise.all(fetchPromises);
       
-      // Chỉ lấy kết quả có dữ liệu (values.length > 0)
       const dataWithContent = results.filter(r => r.values.length > 0);
       
       setHistoricalData(dataWithContent);
@@ -175,13 +166,11 @@ const ComparePage = () => {
     }
   }, []);
 
-  // Effect chạy khi danh sách symbols thay đổi
   useEffect(() => { 
     fetchData(symbols); 
   }, [symbols, fetchData]);
 
 
-  // Thêm mã cổ phiếu
   const handleAddSymbol = () => {
     const sym = inputSymbol.trim().toUpperCase();
     if (sym && symbols.length < 3 && !symbols.includes(sym)) {
@@ -190,12 +179,10 @@ const ComparePage = () => {
     }
   };
 
-  // Xóa mã cổ phiếu
   const handleRemoveSymbol = (symToRemove) => {
     setSymbols(symbols.filter(s => s !== symToRemove));
   };
-  
-  // Xử lý khi nhấn Enter trong ô input
+
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
         handleAddSymbol();
@@ -223,13 +210,11 @@ const ComparePage = () => {
           Theo dõi và so sánh hiệu suất giá trong 30 ngày của tối đa 3 mã cổ phiếu.
         </p>
 
-        {/* Input và Tag Section */}
         <div className="bg-[#1e1e1e] p-6 rounded-xl border border-[#333] shadow-lg mb-8">
             <h2 className="text-xl font-semibold mb-4 text-gray-200">
                 Mã Cổ phiếu So sánh ({symbols.length}/3)
             </h2>
-            
-            {/* Input Box */}
+
             <div className="flex gap-4 mb-4">
                 <div className="relative flex-grow">
                     <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500" size={20} />
@@ -254,8 +239,6 @@ const ComparePage = () => {
                     Thêm
                 </button>
             </div>
-
-            {/* Tags Display */}
             <div className="flex flex-wrap gap-3 mt-4 min-h-[40px]">
                 {symbols.map((sym, index) => (
                     <div 
@@ -275,8 +258,6 @@ const ComparePage = () => {
                 ))}
             </div>
         </div>
-
-        {/* Chart Section */}
         <div className="h-[480px]"> 
           <MultiStockChart 
             historicalData={historicalData} 
@@ -285,8 +266,6 @@ const ComparePage = () => {
             hasError={error} 
           />
         </div>
-
-        {/* Current Price Summary */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
             {symbols.map((sym, index) => {
                 const data = historicalData.find(d => d.symbol === sym);

@@ -23,20 +23,18 @@ const generateMockPredictions = (lastValue, numDays) => {
 
 const StockPredictionChart = ({ labels, values, symbol, isLoading, hasError }) => {
   const chartConfig = useMemo(() => {
-    // Dữ liệu dự đoán
     const lastValue = values.length > 0 ? values[values.length - 1] : 0;
     const mockPredictions = generateMockPredictions(lastValue, PREDICTION_DAYS);
 
-    // Labels cho phần dự đoán
     const predictionLabels = Array.from({ length: PREDICTION_DAYS }, (_, i) => {
       const date = new Date();
-      date.setDate(date.getDate() + i + 1); // Bắt đầu từ ngày mai
+      date.setDate(date.getDate() + i + 1); 
       return date.toLocaleDateString('vi-VN', { month: 'numeric', day: 'numeric' });
     });
 
     return {
       data: {
-        labels: [...labels, ...predictionLabels], // Gộp nhãn lịch sử và dự đoán
+        labels: [...labels, ...predictionLabels], 
         datasets: [{
           label: `${symbol} (Lịch sử)`,
           data: values,
@@ -58,12 +56,11 @@ const StockPredictionChart = ({ labels, values, symbol, isLoading, hasError }) =
         },
         {
           label: `${symbol} (Dự đoán)`,
-          // Đã thêm kiểm tra values.length > 0 để tránh RangeError khi mảng rỗng
           data: values.length > 0 
             ? Array(values.length - 1).fill(NaN).concat([lastValue, ...mockPredictions]) 
             : [],
-          borderColor: '#FFA500', // Màu cam cho dự đoán
-          borderDash: [5, 5], // Nét đứt cho dự đoán
+          borderColor: '#FFA500', 
+          borderDash: [5, 5], 
           backgroundColor: 'transparent',
           borderWidth: 2,
           tension: 0.4,
@@ -137,11 +134,11 @@ const PredictPage = () => {
     setError(false);
     
     try {
-      const response = await fetch(`http://localhost:3000/monthly/data/${sym}`);
+      const response = await fetch(`http://localhost:3000/api/monthly/data/${sym}`);
       if (!response.ok) throw new Error('API Error');
       
       const data = await response.json();
-      const sliceNum = 30; // Lấy 30 ngày gần nhất
+      const sliceNum = 30; 
       const newLabels = data.labels ? data.labels.slice(-sliceNum) : [];
       const newValues = data.values ? data.values.slice(-sliceNum) : [];
 

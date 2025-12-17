@@ -1,23 +1,21 @@
-// src/pages/LoginPage.jsx
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext'; 
 
-const LoginPage = () => {
+const LoginPage = ({ onNavigate }) => { 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState(null); // State lỗi cục bộ
+  const [error, setError] = useState(null); 
   
-  const { login, loading } = useAuth(); // Lấy hàm login và loading từ Context
+  const { login, loading } = useAuth(); 
   
   const handleLogin = async (e) => {
     e.preventDefault(); 
     setError(null); 
 
     try {
-      // Gọi hàm login từ Context và truyền email/password
-      await login(email, password);             
+      await login(email, password);  
+      onNavigate('profile');           
     } catch (err) {
-      // Bắt lỗi từ Context và hiển thị
       setError(err.message); 
     }
   }; 
@@ -30,7 +28,6 @@ const LoginPage = () => {
         </h2>
         
         <form className="space-y-6" onSubmit={handleLogin}>
-          {/* Hiển thị lỗi */}
           {error && (
             <div className="p-3 text-sm font-medium text-white bg-red-500 rounded-lg text-center">
               {error}
@@ -86,17 +83,30 @@ const LoginPage = () => {
           </div>
         </form>
 
-        <div className="mt-6 text-center">
+        <div className="mt-6 space-y-3 text-center">
+            <div className="text-sm text-gray-600">
+                Chưa có tài khoản?
+            </div>
+            <button
+                onClick={() => onNavigate('register')} 
+                className="w-full flex justify-center py-2 px-4 border border-gray-300 rounded-lg shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+            >
+                Create Account
+            </button>
+        </div>
+
+        <div className="mt-4 text-center">
           <a
             href="#"
-            className="text-sm text-blue-600 hover:text-blue-500 underline transition duration-150 ease-in-out"
+            className="text-xs text-blue-600 hover:text-blue-500 underline transition duration-150 ease-in-out"
           >
             Forgot password?
           </a>
         </div>
+
       </div>
     </div>
   );
 }
 
-export default LoginPage
+export default LoginPage;
