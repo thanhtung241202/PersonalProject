@@ -27,7 +27,6 @@ const Header = ({ onNavigate, currentPage }) => {
 
   const AuthButton = () => {
       if (isAuthenticated) {
-          // ✅ SỬA LỖI: Kiểm tra user và user.email trước khi sử dụng split()
           if (!user || !user.email) {
               return (
                    <button 
@@ -40,14 +39,13 @@ const Header = ({ onNavigate, currentPage }) => {
           }
 
           return (
-              // 2. Nếu Đã đăng nhập: Hiển thị Profile/Tên User
               <>
                 <button
                     onClick={handleProfileClick}
                     className="flex items-center gap-2 px-4 py-2 bg-gray-700 text-white text-sm font-semibold rounded-lg shadow-md hover:bg-gray-600 transition-colors duration-200"
                 >
                     <User size={18} />
-                    {user.email.split('@')[0]} {/* ✅ An toàn để gọi split() */}
+                    {user.email.split('@')[0]} 
                 </button>
                 <button
                     onClick={handleLogout}
@@ -59,7 +57,6 @@ const Header = ({ onNavigate, currentPage }) => {
           );
       }
       
-      // Nếu Chưa đăng nhập: Hiển thị nút Login
       return (
           <button
               onClick={() => onNavigate('profile')} 
@@ -75,7 +72,6 @@ const Header = ({ onNavigate, currentPage }) => {
   return (
     <nav className="bg-[#1a1a1a] border-b border-[#2a2a2a] sticky top-0 z-50 w-full shadow-lg">
       <div className="max-w-7xl mx-auto px-4 flex justify-between h-16 items-center">
-        {/* ... Logo và Menu Items giữ nguyên ... */}
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => onNavigate('tracker')}>
             <TrendingUp className="text-[#3a7bf7]" />
             <span className="text-xl font-bold text-white">Stock<span className="text-[#3a7bf7]">Tracker</span></span>
@@ -115,10 +111,9 @@ const Header = ({ onNavigate, currentPage }) => {
             </button>
           ))}
           
-          {/* Menu Mobile: Sửa logic đăng nhập */}
           <div className="px-6 pt-2 pb-3 mt-2 flex justify-between items-center border-t border-[#2a2a2a]">
               <div className="flex-1">
-                  {isAuthenticated && user && user.email ? ( // ✅ Sửa lỗi tại đây
+                  {isAuthenticated && user && user.email ? ( 
                       <span className="text-white text-base font-semibold">{user.email.split('@')[0]}</span>
                   ) : (
                       <span className="text-gray-400 text-base">Bạn chưa đăng nhập</span>
