@@ -1,0 +1,14 @@
+# Các file cấu hình nhạy cảm
+.env
+*.env
+
+# Thư viện (Tuyệt đối không đẩy lên)
+node_modules/
+**/node_modules/
+
+# File rác hệ thống Mac
+.DS_Store
+
+# Build folder (nếu có)
+dist/
+build/
