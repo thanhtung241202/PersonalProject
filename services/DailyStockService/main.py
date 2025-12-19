@@ -15,7 +15,7 @@ app = FastAPI()
 # --- CẤU HÌNH CORS (Để React gọi được) ---
 origins = [
     "http://localhost:8000", # Node.js Gateway
-    "http://localhost:3000", # React Direct (nếu cần)
+    "https://gateway-production-6658.up.railway.app", # React Direct (nếu cần)
 ]
 app.add_middleware(
     CORSMiddleware,

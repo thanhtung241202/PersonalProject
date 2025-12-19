@@ -24,7 +24,7 @@ const RegisterPage = ({ onNavigate, onRegistrationSuccess }) => {
 
         setLoading(true);
         try {
-            const response = await fetch('http://localhost:3000/api/auth/register', {
+            const response = await fetch('https://gateway-production-6658.up.railway.app/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

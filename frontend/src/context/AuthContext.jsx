@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
         setLoading(true);
 
         try {
-            const response = await fetch(`http://localhost:3000/api/auth/login`, {
+            const response = await fetch(`https://gateway-production-6658.up.railway.app/api/auth/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ email, password }),
@@ -33,7 +33,7 @@ export const AuthProvider = ({ children }) => {
 
     const logout = async () => {
         try {
-            await fetch(`http://localhost:3000/api/auth/logout`, { method: 'POST', credentials: 'include' });
+            await fetch(`https://gateway-production-6658.up.railway.app/api/auth/logout`, { method: 'POST', credentials: 'include' });
             setUser(null); 
 
         } catch (err) {
