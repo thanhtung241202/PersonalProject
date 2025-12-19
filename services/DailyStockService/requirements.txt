@@ -1,14 +1,14 @@
-fastapi==0.118.0
-uvicorn==0.37.0
-python-dotenv==1.0.0
-requests==2.32.5
+# Web Framework & Server
+fastapi
+uvicorn
+python-dotenv
+requests
 
-pandas==2.3.3
-numpy==1.26.4
-vnstock==3.3.0
+pandas
+numpy
+vnstock>=3.3.0
 
-beautifulsoup4==4.14.2
-pydantic==2.11.1
+beautifulsoup4
+pydantic
 
-
-vnstock_data
+git+https://github.com/thinh-vu/vnstock.git
