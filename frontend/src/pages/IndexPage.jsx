@@ -17,7 +17,7 @@ const IndexPage = () => {
     
     try {
       // API call tới Backend của bạn (localhost:3000)
-      const response = await fetch(`https://gateway-production-6658.up.railway.app/api/monthly/data/${sym}`);
+      const response = await fetch(`http://localhost:3000/api/monthly/data/${sym}`);
       if (!response.ok) throw new Error('API Error');
       
       const data = await response.json();

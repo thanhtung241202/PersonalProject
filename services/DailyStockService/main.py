@@ -1,7 +1,6 @@
 from fastapi import FastAPI, BackgroundTasks
 from fastapi.middleware.cors import CORSMiddleware
 
-# Import các hàm từ file logic em vừa viết xong
 from StockUpdate import (
     results_queues, 
     init_symbol_data, 
@@ -12,10 +11,12 @@ from StockUpdate import (
 
 app = FastAPI()
 
-# --- CẤU HÌNH CORS (Để React gọi được) ---
+
 origins = [
-    "http://localhost:8000", # Node.js Gateway
-    "https://gateway-production-6658.up.railway.app", # React Direct (nếu cần)
+    "http://localhost:3000", 
+    "http://localhost:5173",
+    "http://127.0.0.1:3000",
+    "http://127.0.0.1:5173",
 ]
 app.add_middleware(
     CORSMiddleware,
