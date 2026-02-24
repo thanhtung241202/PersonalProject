@@ -21,8 +21,20 @@ const App = () => {
       <main className="flex-1 w-full">
         {page === 'tracker' && <IndexPage />}
         {page === 'about' && <AboutPage />}
-        {page === 'compare' && <ComparePage />}
-        {page === 'predict' && <PredictPage/>}
+        {page === 'compare' && (
+          isAuthenticated ? (
+            <ComparePage/>
+          ) : (
+            <LoginPage onNavigate={setPage}/>
+          )
+        )}
+        {page === 'predict' && (
+          isAuthenticated ? (
+            <PredictPage/>
+          ) : (
+            <LoginPage onNavigate={setPage}/>
+          )
+        )}
         {page === 'register' && <RegisterPage onNavigate={setPage}/>}
         {page === 'profile' && (
           isAuthenticated ? (

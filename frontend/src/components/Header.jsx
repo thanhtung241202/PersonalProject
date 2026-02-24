@@ -21,7 +21,7 @@ const Header = ({ onNavigate, currentPage }) => {
 
   const handleLogout = () => {
       logout(); 
-      onNavigate('home'); 
+      onNavigate('login'); 
       setIsMenuOpen(false);
   }
 
@@ -120,7 +120,7 @@ const Header = ({ onNavigate, currentPage }) => {
                   )}
               </div>
               <button
-                  onClick={isAuthenticated ? handleLogout : () => onNavigate('profile')}
+                  onClick={isAuthenticated ? handleLogout : () => onNavigate('login')}
                   className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-colors ${
                       isAuthenticated ? 'bg-red-600 hover:bg-red-700 text-white' : 'bg-[#3a7bf7] hover:bg-[#5a8ff7] text-white'
                   }`}
